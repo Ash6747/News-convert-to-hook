@@ -10,7 +10,6 @@ export default class App extends Component {
   state = {
     progress: 0,
     categories: [
-      "general",
       "business",
       "entertainment",
       "health",
@@ -19,6 +18,8 @@ export default class App extends Component {
       "technology",
     ],
   };
+  apiKey = process.env.REACT_APP_NEWS_API; // Fetch from .env.local
+
   setProgress = (progress) => {
     this.setState({ progress });
   };
@@ -32,20 +33,33 @@ export default class App extends Component {
             progress={this.state.progress}
           />
           <Routes>
+            <Route
+              path="/"
+              element={
+                <News
+                  pageSize={8}
+                  category="general"
+                  apiKey={this.apiKey}
+                  setProgress={this.setProgress}
+                />
+              }
+            />
             {this.state.categories.map((category, index) => (
               <Route
                 key={index}
-                path={`/${category}`}
+                path={`/${category }`}
                 element={
                   <News
-                    key={category}
+                    key={index}
                     pageSize={8}
                     category={category}
+                    apiKey={this.apiKey}
                     setProgress={this.setProgress}
                   />
                 }
               />
             ))}
+            
           </Routes>
         </Router>
       </div>
