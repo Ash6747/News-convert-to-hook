@@ -1,36 +1,42 @@
 // import logo from './logo.svg';
 import "./App.css";
-import React, { Component } from "react";
+import React, { useState } from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoadingBar from "react-top-loading-bar";
 
-export default class App extends Component {
-  state = {
-    progress: 0,
-    categories: [
-      "business",
-      "entertainment",
-      "health",
-      "science",
-      "sports",
-      "technology",
-    ],
-  };
-  apiKey = process.env.REACT_APP_NEWS_API; // Fetch from .env.local
+const App = () =>{
 
-  setProgress = (progress) => {
-    this.setState({ progress });
-  };
-  render() {
+  let categories = [
+    "business",
+    "entertainment",
+    "health",
+    "science",
+    "sports",
+    "technology",
+  ];
+  const [ progress, setProgress ] = useState(0);
+  // state = {
+  //   progress: 0,
+  //   categories: [
+  //     "business",
+  //     "entertainment",
+  //     "health",
+  //     "science",
+  //     "sports",
+  //     "technology",
+  //   ],
+  // };
+  let apiKey = process.env.REACT_APP_NEWS_API; // Fetch from .env.local
+
     return (
       <div>
         <Router>
           <Navbar />
           <LoadingBar
             color="#f11946"
-            progress={this.state.progress}
+            progress={progress}
           />
           <Routes>
             <Route
@@ -39,12 +45,13 @@ export default class App extends Component {
                 <News
                   pageSize={8}
                   category="general"
-                  apiKey={this.apiKey}
-                  setProgress={this.setProgress}
+                  country="us"
+                  apiKey={apiKey}
+                  setProgress={setProgress}
                 />
               }
             />
-            {this.state.categories.map((category, index) => (
+            {categories.map((category, index) => (
               <Route
                 key={index}
                 path={`/${category }`}
@@ -52,9 +59,10 @@ export default class App extends Component {
                   <News
                     key={index}
                     pageSize={8}
+                    country="us"
                     category={category}
-                    apiKey={this.apiKey}
-                    setProgress={this.setProgress}
+                    apiKey={apiKey}
+                    setProgress={setProgress}
                   />
                 }
               />
@@ -64,5 +72,6 @@ export default class App extends Component {
         </Router>
       </div>
     );
-  }
 }
+
+export default App
