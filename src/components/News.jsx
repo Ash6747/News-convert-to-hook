@@ -55,7 +55,7 @@ const News = (props) => {
   }, []);
 
   return (
-    <>
+    <div style={{marginTop: '70px'}}>
       <h2 className="text-center">Top Headlines :</h2>
       {loading && <Loading/>}
 
@@ -99,7 +99,7 @@ const News = (props) => {
           </div>
         </div>
       </InfiniteScroll>
-    </>
+    </div>
   );
 }
 
