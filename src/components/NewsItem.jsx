@@ -1,25 +1,36 @@
-import React from 'react'
+import React from "react";
+import PropTypes from "prop-types";
 
-const NewsItem = ({title, description, urlToImage, item, url}) => {
-    let image = "https://media.istockphoto.com/id/929047972/vector/world-news-flat-vector-icon-news-symbol-logo-illustration-business-concept-simple-flat.jpg?s=2048x2048&w=is&k=20&c=GlanUklo3y2edb_Di1DDEyETSW6GIhZEDBk-G_IcbPU=";
-    // let  = props;
-    return (
-      <>
-        <div className="card" >
-                  <span className="position-absolute top-0 start-50 translate-middle badge rounded-pill bg-danger">
-                    {item.source.name ?? "Third Party"}
-                  </span>
-            <img src={urlToImage ?? image } className="card-img-top" alt="News visual"/>
-            <div className="card-body">
-                <h5 className="card-title">{title}
-                </h5>
-                <p className="card-text">{description}</p>
-                <p className="card-text"><small className="text-muted">News by {item.author ?? 'Unknown'} on {new Date(item.publishedAt).toGMTString()}</small></p>
-                <a href={url} target='_blank' rel="noreferrer" className="btn btn-primary">Go somewhere</a>
-            </div>
-        </div>
-      </>
-    )
-}
+const NewsItem = ({ title, description, urlToImage, url, item }) => {
+  return (
+    <div className="card">
+      <img
+        src={urlToImage || "https://via.placeholder.com/150"} // Default placeholder image if urlToImage is missing
+        className="card-img-top"
+        alt="News Thumbnail"
+      />
+      <div className="card-body">
+        <h5 className="card-title">{title || "No Title Available"}</h5>
+        <p className="card-text">{description || "No Description Available"}</p>
+        <p className="card-text">
+          <small className="text-muted">
+            {item?.source?.name || "Unknown Source"} {/* Handle missing source */}
+          </small>
+        </p>
+        <a href={url} className="btn btn-primary" target="_blank" rel="noreferrer">
+          Read More
+        </a>
+      </div>
+    </div>
+  );
+};
 
-export default NewsItem
+NewsItem.propTypes = {
+  title: PropTypes.string,
+  description: PropTypes.string,
+  urlToImage: PropTypes.string,
+  url: PropTypes.string,
+  item: PropTypes.object.isRequired,
+};
+
+export default NewsItem;

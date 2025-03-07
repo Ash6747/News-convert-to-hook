@@ -1,6 +1,6 @@
 // import logo from './logo.svg';
 import "./App.css";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import Navbar from "./components/Navbar";
 import News from "./components/News";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -17,6 +17,9 @@ const App = () => {
   ];
   const [progress, setProgress] = useState(0);
   let apiKey = process.env.REACT_APP_NEWS_API; // Fetch from .env.local
+  const handleProgress = useCallback((progress) => {
+    setProgress(progress);
+  });
 
   return (
     <div>
@@ -32,7 +35,7 @@ const App = () => {
                 category="general"
                 country="us"
                 apiKey={apiKey}
-                setProgress={setProgress}
+                setProgress={handleProgress}
               />
             }
           />
@@ -47,7 +50,7 @@ const App = () => {
                   country="us"
                   category={category}
                   apiKey={apiKey}
-                  setProgress={setProgress}
+                  setProgress={handleProgress}
                 />
               }
             />
